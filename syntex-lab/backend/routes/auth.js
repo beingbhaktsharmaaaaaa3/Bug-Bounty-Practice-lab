@@ -84,7 +84,7 @@ router.get('/register', (req, res) => {
 
 // POST /register — create new user (VULNERABILITY: weak password validation)
 router.post('/register', rateLimit, async (req, res) => {
-    const { username, email, password, password_confirm, first_name, last_name } = req.body;
+    const { username, email, password, confirm_password, first_name, last_name } = req.body;
 
     // VULNERABILITY: Weak password validation (no complexity check)
     if (!username || !email || !password || password.length < 3) {
@@ -95,7 +95,7 @@ router.post('/register', rateLimit, async (req, res) => {
         });
     }
 
-    if (password !== password_confirm) {
+    if (password !== confirm_password) {
         return res.render('register', {
             title: 'Register — Syntex Solutions',
             error: 'Passwords do not match',
